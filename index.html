@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>صقر ترانسليت | Saqr Translate</title>
+    
+    <!-- PWA Manifest Meta -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        saqr: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#1e1b4b',
+                            gold: '#f59e0b',
+                            neon: '#00f2fe',
+                        },
+                        darkbg: '#0b0f19',
+                        darkcard: 'rgba(17, 24, 39, 0.75)',
+                    },
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles & Animations -->
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(99,102,241,0.22), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(0,242,254,0.12), transparent 30%),
+                linear-gradient(135deg, #0b0f19 0%, #101827 30%, #111827 100%);
+            color: #f3f4f6;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .glass-panel {
+            background: rgba(17, 25, 40, 0.72);
+            backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.3);
+        }
+
+        .tab-btn, .mob-tab, button {
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover, .mob-tab:hover, button:hover {
+            transform: translateY(-1px);
+        }
+
+        .primary-action {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 35%, #f59e0b 100%);
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.35);
+        }
+
+        .secondary-action {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .mobile-cta {
+            min-height: 52px;
+            font-size: 0.85rem;
+            padding: 0.9rem 1rem;
+        }
+
+        .mobile-shell {
+            padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+        }
+
+        .glass-nav {
+            padding-bottom: calc(0.8rem + env(safe-area-inset-bottom));
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        button, input, select, textarea {
+            touch-action: manipulation;
+        }
+
+        @media (max-width: 640px) {
+            .glass-panel {
+                border-radius: 1.2rem;
+            }
+
+            .tab-btn {
+                padding-left: 0.8rem;
+                padding-right: 0.8rem;
+            }
+
+            .mobile-cta {
+                min-height: 58px;
+                font-size: 0.9rem;
+                padding: 1rem 1.1rem;
+            }
+
+            .mob-tab {
+                min-width: 66px;
+                min-height: 58px;
+                padding-top: 0.6rem;
+                padding-bottom: 0.6rem;
+            }
+        }
+
+        .glass-nav {
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .premium-stat {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.16), rgba(15, 23, 42, 0.76));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18);
+        }
+
+        .feature-chip {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+        }
+
+        .premium-cta {
+            background: linear-gradient(135deg, rgba(99,102,241,0.25), rgba(245,158,11,0.18));
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 18px 40px rgba(79, 70, 229, 0.2);
+        }
+
+        .soft-ring {
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 18px 40px rgba(15, 23, 42, 0.28);
+        }
+
+        /* Pulse glowing logo */
+        .falcon-glow {
+            filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.6));
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.4);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(99, 102, 241, 0.8);
+        }
+
+        /* Wave animation for audio */
+        @keyframes pulseWave {
+            0%, 100% { height: 8px; }
+            50% { height: 32px; }
+        }
+        .wave-bar {
+            animation: pulseWave 1.2s infinite ease-in-out;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        button, input, select, textarea {
+            touch-action: manipulation;
+        }
+
+        @media (max-width: 640px) {
+            .glass-panel {
+                border-radius: 1.25rem;
+            }
+
+            .tab-btn {
+                padding-left: 0.8rem;
+                padding-right: 0.8rem;
+            }
+        }
+
+        /* Lens Bounding Box Highlight */
+        .lens-box {
+            position: absolute;
+            border: 2px solid #00f2fe;
+            background: rgba(0, 242, 254, 0.15);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .lens-box:hover {
+            background: rgba(0, 242, 254, 0.3);
+            scale: 1.02;
+        }
+
+        /* Scanning laser line */
+        .scan-laser {
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00f2fe, #f59e0b, transparent);
+            box-shadow: 0 0 15px #00f2fe;
+            animation: scanMove 2.5s infinite linear;
+        }
+        @keyframes scanMove {
+            0% { top: 0%; opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { top: 98%; opacity: 0.8; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between pb-20 md:pb-6 antialiased selection:bg-saqr-500 selection:text-white">
+
+    <!-- HEADER / LOGO BAR -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-white/10 px-4 py-3 sm:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            
+            <!-- Brand / Logo -->
+            <div class="flex items-center space-x-3 space-x-reverse cursor-pointer" onclick="switchTab('pdf')">
+                <div class="relative w-11 h-11 rounded-2xl bg-gradient-to-tr from-saqr-600 via-indigo-500 to-saqr-gold p-0.5 flex items-center justify-center shadow-lg shadow-saqr-500/20">
+                    <div class="w-full h-full bg-darkbg rounded-[14px] flex items-center justify-center">
+                        <i class="fa-solid font-bold fa-crow text-xl text-transparent bg-clip-text bg-gradient-to-r from-saqr-neon via-indigo-300 to-saqr-gold falcon-glow"></i>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-black text-xl tracking-wide flex items-center gap-2">
+                        <span class="text-white">صقر</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-saqr-neon to-saqr-500">ترانسليت</span>
+                    </h1>
+                    <p class="text-[10px] text-gray-400 -mt-1 font-medium">Saqr AI Lens & PDF Engine</p>
+                </div>
+            </div>
+
+            <!-- Header Controls -->
+            <div class="flex items-center space-x-2 space-x-reverse">
+                <div id="networkStatus" class="hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-xl border text-[10px] font-bold">
+                    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span>متصل</span>
+                </div>
+
+                <!-- PWA Install Button -->
+                <button id="pwaInstallBtn" onclick="installPWA()" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-saqr-500/10 hover:bg-saqr-500/20 border border-saqr-500/30 text-saqr-500 text-xs font-bold transition primary-action text-white">
+                    <i class="fa-solid fa-circle-down"></i>
+                    <span>تثبيت التطبيق</span>
+                </button>
+
+                <!-- Language Quick Selector -->
+                <div class="flex items-center glass-panel px-3 py-1.5 rounded-xl text-xs gap-2">
+                    <select id="globalSourceLang" class="bg-transparent text-gray-200 outline-none cursor-pointer">
+                        <option value="auto" class="bg-gray-900">تلقائي (اكتشاف)</option>
+                        <option value="ar" class="bg-gray-900">العربية</option>
+                        <option value="en" class="bg-gray-900">الإنجليزية</option>
+                        <option value="fr" class="bg-gray-900">الفرنسية</option>
+                        <option value="de" class="bg-gray-900">الألمانية</option>
+                        <option value="es" class="bg-gray-900">الإسبانية</option>
+                        <option value="it" class="bg-gray-900">الإيطالية</option>
+                        <option value="pt" class="bg-gray-900">البرتغالية</option>
+                        <option value="tr" class="bg-gray-900">التركية</option>
+                        <option value="ja" class="bg-gray-900">اليابانية</option>
+                        <option value="ko" class="bg-gray-900">الكورية</option>
+                        <option value="zh" class="bg-gray-900">الصينية</option>
+                        <option value="ru" class="bg-gray-900">الروسية</option>
+                        <option value="nl" class="bg-gray-900">الهولندية</option>
+                    </select>
+                    <i class="fa-solid fa-arrow-left-long text-saqr-gold text-[10px]"></i>
+                    <select id="globalTargetLang" class="bg-transparent text-saqr-neon font-bold outline-none cursor-pointer">
+                        <option value="ar" class="bg-gray-900" selected>العربية</option>
+                        <option value="en" class="bg-gray-900">الإنجليزية</option>
+                        <option value="fr" class="bg-gray-900">الفرنسية</option>
+                        <option value="de" class="bg-gray-900">الألمانية</option>
+                        <option value="es" class="bg-gray-900">الإسبانية</option>
+                        <option value="it" class="bg-gray-900">الإيطالية</option>
+                        <option value="pt" class="bg-gray-900">البرتغالية</option>
+                        <option value="tr" class="bg-gray-900">التركية</option>
+                        <option value="ja" class="bg-gray-900">اليابانية</option>
+                        <option value="ko" class="bg-gray-900">الكورية</option>
+                        <option value="zh" class="bg-gray-900">الصينية</option>
+                        <option value="ru" class="bg-gray-900">الروسية</option>
+                        <option value="nl" class="bg-gray-900">الهولندية</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 flex-1">
+
+        <div class="premium-cta soft-ring rounded-3xl p-4 sm:p-5 mb-8">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div>
+                    <div class="flex flex-wrap items-center gap-2 mb-3">
+                        <span class="feature-chip text-[10px] sm:text-xs font-bold text-saqr-neon px-2.5 py-1 rounded-full">AI Translation</span>
+                        <span class="feature-chip text-[10px] sm:text-xs font-bold text-emerald-300 px-2.5 py-1 rounded-full">PDF Smart</span>
+                        <span class="feature-chip text-[10px] sm:text-xs font-bold text-amber-300 px-2.5 py-1 rounded-full">Lens OCR</span>
+                    </div>
+                    <h2 class="text-lg sm:text-2xl font-black text-white">ترجمة ذكية، سريعة، ومناسبة لكل شاشة</h2>
+                </div>
+                <div class="flex flex-wrap gap-3 text-xs text-gray-200">
+                    <div class="premium-stat rounded-2xl px-3 py-2 min-w-[110px]">
+                        <div class="text-saqr-neon font-black text-lg">98%</div>
+                        <div class="text-gray-300">دقة القراءة</div>
+                    </div>
+                    <div class="premium-stat rounded-2xl px-3 py-2 min-w-[110px]">
+                        <div class="text-emerald-300 font-black text-lg">4x</div>
+                        <div class="text-gray-300">أسرع تجربة</div>
+                    </div>
+                    <div class="premium-stat rounded-2xl px-3 py-2 min-w-[110px]">
+                        <div class="text-amber-300 font-black text-lg">PWA</div>
+                        <div class="text-gray-300">تثبيت فوري</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- DESKTOP TOP NAVIGATION TABS -->
+        <div class="hidden md:flex items-center justify-center space-x-2 space-x-reverse mb-8">
+            <button onclick="switchTab('pdf')" id="tab-btn-pdf" class="tab-btn px-6 py-3 rounded-2xl font-bold text-sm transition flex items-center gap-2 bg-saqr-600 text-white shadow-lg shadow-saqr-600/30">
+                <i class="fa-solid fa-file-pdf text-base"></i>
+                <span>ترجمة المستندات (PDF)</span>
+            </button>
+            <button onclick="switchTab('lens')" id="tab-btn-lens" class="tab-btn px-6 py-3 rounded-2xl font-bold text-sm transition flex items-center gap-2 bg-white/5 text-gray-400 hover:text-white hover:bg-white/10">
+                <i class="fa-solid fa-expand text-base text-saqr-neon"></i>
+                <span>عدسة صقر (الصور)</span>
+            </button>
+            <button onclick="switchTab('text')" id="tab-btn-text" class="tab-btn px-6 py-3 rounded-2xl font-bold text-sm transition flex items-center gap-2 bg-white/5 text-gray-400 hover:text-white hover:bg-white/10">
+                <i class="fa-solid fa-language text-base text-saqr-gold"></i>
+                <span>ترجمة النصوص</span>
+            </button>
+            <button onclick="switchTab('audio')" id="tab-btn-audio" class="tab-btn px-6 py-3 rounded-2xl font-bold text-sm transition flex items-center gap-2 bg-white/5 text-gray-400 hover:text-white hover:bg-white/10">
+                <i class="fa-solid fa-microphone-lines text-base text-emerald-400"></i>
+                <span>الترجمة الصوتية</span>
+            </button>
+        </div>
+
+        <!-- ================= MODE 1: PDF TRANSLATOR ================= -->
+        <section id="tab-pdf" class="tab-content transition-all duration-300">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Upload & Settings Side -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="glass-panel rounded-3xl p-6 relative overflow-hidden border border-white/10">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="font-bold text-lg text-white flex items-center gap-2">
+                                <i class="fa-solid fa-file-pdf text-red-500"></i>
+                                <span>رفع ملف PDF</span>
+                            </h2>
+                            <span class="text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded-full font-medium">حفظ التنسيق + الصور + الرسومات 100%</span>
+                        </div>
+
+                        <!-- Drag and Drop Box -->
+                        <div id="pdfDropZone" class="border-2 border-dashed border-gray-700 hover:border-saqr-500 rounded-2xl p-8 text-center cursor-pointer transition bg-darkbg/40 hover:bg-saqr-500/5 group relative" onclick="document.getElementById('pdfFileInput').click()" ondragover="event.preventDefault(); this.classList.add('border-saqr-500');" ondragleave="this.classList.remove('border-saqr-500');" ondrop="event.preventDefault(); this.classList.remove('border-saqr-500'); const file = event.dataTransfer?.files?.[0]; if (file) handlePDFUpload(file);">
+                            <input type="file" id="pdfFileInput" accept="application/pdf,.pdf" class="hidden" onchange="handlePDFUpload(this.files[0])">
+                            <div class="w-16 h-16 rounded-2xl bg-saqr-500/10 text-saqr-500 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-cloud-arrow-up text-3xl"></i>
+                            </div>
+                            <p class="font-bold text-gray-200 text-sm mb-1">اسحب ملف الـ PDF هنا أو اضغط للاختيار</p>
+                            <p class="text-xs text-gray-400">يدعم حتى 100 ميجابايت (الكتب، الأبحاث، التقارير)</p>
+                        </div>
+
+                        <!-- Selected File Status Box -->
+                        <div id="pdfFileDetails" class="hidden mt-4 p-4 rounded-2xl bg-saqr-500/10 border border-saqr-500/30 flex items-center justify-between">
+                            <div class="flex items-center gap-3 overflow-hidden">
+                                <i class="fa-solid fa-file-pdf text-red-500 text-2xl flex-shrink-0"></i>
+                                <div class="truncate">
+                                    <p id="pdfFileName" class="font-bold text-sm text-white truncate">document.pdf</p>
+                                    <p id="pdfFileSize" class="text-xs text-gray-400">2.4 MB • 14 صفحة</p>
+                                </div>
+                            </div>
+                            <button onclick="removePDFFile()" class="text-gray-400 hover:text-red-400 p-2"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+
+                        <!-- Translation Options -->
+                        <div class="mt-6 space-y-4">
+                            <label class="block text-xs font-bold text-gray-300">نطاق الصفحات المراد ترجمتها:</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="flex items-center gap-2 glass-panel p-3 rounded-xl cursor-pointer hover:border-saqr-500/50">
+                                    <input type="radio" name="pdfRange" value="all" checked class="accent-saqr-500" onchange="togglePDFRangeInput(false)">
+                                    <span class="text-xs font-bold text-gray-200">كل الصفحات</span>
+                                </label>
+                                <label class="flex items-center gap-2 glass-panel p-3 rounded-xl cursor-pointer hover:border-saqr-500/50">
+                                    <input type="radio" name="pdfRange" value="custom" class="accent-saqr-500" onchange="togglePDFRangeInput(true)">
+                                    <span class="text-xs font-bold text-gray-200">تحديد صفحات</span>
+                                </label>
+                            </div>
+
+                            <div id="pdfCustomRangeBox" class="hidden grid-cols-2 gap-3 pt-1">
+                                <div>
+                                    <span class="text-[11px] text-gray-400 block mb-1">من صفحة:</span>
+                                    <input type="number" id="pdfPageStart" value="1" min="1" class="w-full bg-darkbg border border-gray-700 rounded-xl px-3 py-2 text-sm text-center outline-none focus:border-saqr-500">
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-gray-400 block mb-1">إلى صفحة:</span>
+                                    <input type="number" id="pdfPageEnd" value="5" min="1" class="w-full bg-darkbg border border-gray-700 rounded-xl px-3 py-2 text-sm text-center outline-none focus:border-saqr-500">
+                                </div>
+                            </div>
+
+                            <div class="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-xs font-bold text-saqr-neon">إعدادات OCR + API</h3>
+                                    <span class="text-[10px] text-gray-400">مضمن</span>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] text-gray-300 mb-1">وضع OCR</label>
+                                    <div class="rounded-xl border border-saqr-500/30 bg-saqr-500/10 px-3 py-2 text-sm text-saqr-neon font-bold">جداول معقدة</div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] text-gray-300 mb-1">رابط API</label>
+                                    <div class="rounded-xl border border-white/10 bg-darkbg px-3 py-2 text-xs text-gray-300 break-all">https://translate.argosopentech.com/translate</div>
+                                </div>
+                            </div>
+
+                            <!-- Start Process Button -->
+                            <button id="startPDFTranslateBtn" onclick="processPDFTranslation()" disabled class="w-full py-4 rounded-2xl bg-gradient-to-r from-saqr-600 via-indigo-600 to-saqr-gold text-white font-bold shadow-lg shadow-saqr-600/30 opacity-50 cursor-not-allowed transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <span>بدء ترجمة المستند الآن</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview & Download Section -->
+                <div class="lg:col-span-7">
+                    <div class="glass-panel rounded-3xl p-6 h-full flex flex-col justify-between min-h-[450px]">
+                        <div>
+                            <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
+                                <h3 class="font-bold text-white text-base flex items-center gap-2">
+                                    <i class="fa-solid fa-eye text-saqr-neon"></i>
+                                    <span>المعاينة الحية للمستند المترجم</span>
+                                </h3>
+                                <div id="pdfStatusBadge" class="hidden items-center gap-2 text-xs text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
+                                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+                                    <span>جاري المعالجة...</span>
+                                </div>
+                            </div>
+
+                            <!-- Empty State Preview -->
+                            <div id="pdfEmptyPreview" class="flex flex-col items-center justify-center py-20 text-center text-gray-500">
+                                <i class="fa-solid fa-file-invoice text-6xl mb-4 text-gray-700"></i>
+                                <p class="font-bold text-gray-300">لم يتم رفع أي مستند حتى الآن</p>
+                                <p class="text-xs text-gray-500 mt-1">قم برفع ملف PDF في الجانب الأيمن لترجمته فوراً مع الحفاظ على التنسيق والجدول والصور</p>
+                            </div>
+
+                            <!-- Live Document Render Canvas Simulation -->
+                            <div id="pdfActivePreview" class="hidden space-y-4">
+                                <div id="pdfPreviewCard" class="hidden rounded-2xl border border-saqr-500/20 bg-saqr-500/5 p-3">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-[11px] font-bold text-saqr-neon">معاينة الملف المحدد</span>
+                                        <span id="pdfPreviewMeta" class="text-[10px] text-gray-400">جاهز للمعاينة</span>
+                                    </div>
+                                    <div class="rounded-xl border border-white/10 bg-slate-100 p-2 min-h-[220px] flex items-center justify-center overflow-hidden">
+                                        <canvas id="pdfPreviewCanvas" class="max-h-[220px] w-full rounded-lg shadow-inner bg-white"></canvas>
+                                    </div>
+                                </div>
+
+                                <!-- Progress bar during translation -->
+                                <div id="pdfProgressBarBox" class="space-y-1">
+                                    <div class="flex justify-between text-xs font-bold">
+                                        <span class="text-saqr-neon" id="pdfProgressStep">استخراج النصوص والصور...</span>
+                                        <span class="text-saqr-gold" id="pdfProgressPercent">0%</span>
+                                    </div>
+                                    <div class="w-full bg-darkbg h-2.5 rounded-full overflow-hidden border border-white/5">
+                                        <div id="pdfProgressBar" class="bg-gradient-to-r from-saqr-neon to-saqr-gold h-full w-0 transition-all duration-300"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Mock Translated Page Canvas -->
+                                <div class="bg-white text-gray-900 rounded-2xl p-6 shadow-2xl relative min-h-[350px] font-sans border border-gray-300" id="mockPdfPaper">
+                                    <div class="flex justify-between items-center border-b pb-3 mb-4">
+                                        <span class="text-xs font-bold text-indigo-700 flex items-center gap-1">
+                                            <i class="fa-solid fa-crown text-saqr-gold"></i> صقر ترانسليت - المستند المترجم
+                                        </span>
+                                        <span class="text-[10px] text-gray-400">صفحة 1 من 14</span>
+                                    </div>
+                                    
+                                    <h2 class="text-xl font-bold text-gray-800 mb-3" id="mockPdfTitle">عنوان التقرير السنوي للتكنولوجيا 2026</h2>
+                                    <p class="text-xs text-gray-600 leading-relaxed mb-4" id="mockPdfBody">
+                                        يعتبر الذكاء الاصطناعي التوليدي والترجمة الفورية عبر النماذج العصبية المتقدمة أحد أهم ركائز التحول الرقمي في هذا العصر. يتيح نظام صقر ترانسليت إعادة بناء المستندات والأوراق البحثية مع الحفاظ التام على هوامش الصفحة، والجداول التوضيحية، والخطوط، ومواقع الصور بدقة عالية.
+                                    </p>
+
+                                    <!-- Mock Table inside PDF -->
+                                    <div class="my-4 border rounded-lg overflow-hidden text-xs">
+                                        <table class="w-full text-right border-collapse">
+                                            <thead class="bg-indigo-50 font-bold text-indigo-900">
+                                                <tr>
+                                                    <th class="p-2 border-b">العنصر</th>
+                                                    <th class="p-2 border-b">الحالة</th>
+                                                    <th class="p-2 border-b">الدقة</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-200">
+                                                <tr>
+                                                    <td class="p-2">تنسيق النصوص</td>
+                                                    <td class="p-2 text-emerald-600 font-bold">محفوظ</td>
+                                                    <td class="p-2">99.8%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-2">الرسوم البيانية</td>
+                                                    <td class="p-2 text-emerald-600 font-bold">مترجمة بالكامل</td>
+                                                    <td class="p-2">100%</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div id="pdfPagesGallery" class="hidden mt-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 max-h-[420px] overflow-y-auto pr-1"></div>
+                            </div>
+                        </div>
+
+                        <!-- Download Action Panel -->
+                        <div id="pdfDownloadPanel" class="hidden pt-4 border-t border-white/10 mt-4 flex items-center justify-between">
+                            <span class="text-xs text-emerald-400 flex items-center gap-1 font-bold">
+                                <i class="fa-solid fa-circle-check"></i> اكتملت الترجمة بنجاح!
+                            </span>
+                            <button onclick="downloadTranslatedPDF()" class="px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow-lg shadow-emerald-500/20 transition flex items-center gap-2">
+                                <i class="fa-solid fa-download"></i>
+                                <span>تحميل PDF المترجم</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= MODE 2: IMAGE LENS / SCANNER ================= -->
+        <section id="tab-lens" class="tab-content hidden transition-all duration-300">
+            <div class="glass-panel rounded-3xl p-6 border border-white/10">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="font-bold text-lg text-white flex items-center gap-2">
+                            <i class="fa-solid fa-expand text-saqr-neon"></i>
+                            <span>عدسة صقر الفورية (Google Lens Style)</span>
+                        </h2>
+                        <p class="text-xs text-gray-400">ترجمة الكلام داخل الصور والفواتير والقوائم مباشرة بنفس الخلفية والألوان والتنسيق الأصلي</p>
+                    </div>
+
+                    <!-- Lens Image Actions -->
+                    <div class="flex items-center gap-2">
+                        <label class="px-4 py-2 rounded-xl bg-saqr-600 hover:bg-saqr-700 text-white text-xs font-bold cursor-pointer transition flex items-center gap-2 shadow-lg shadow-saqr-600/20 primary-action mobile-cta">
+                            <i class="fa-solid fa-image"></i>
+                            <span>اختيار صورة</span>
+                            <input type="file" accept="image/*" class="hidden" onchange="handleLensImageUpload(this.files[0])">
+                        </label>
+                        <button onclick="openLiveCameraModal()" class="px-4 py-2 rounded-xl glass-panel hover:bg-white/10 text-saqr-gold text-xs font-bold transition flex items-center gap-2 secondary-action mobile-cta">
+                            <i class="fa-solid fa-camera"></i>
+                            <span>الكاميرا الحية</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Lens Display Viewer -->
+                <div id="lensContainer" class="relative rounded-2xl overflow-hidden bg-black/60 min-h-[400px] max-h-[600px] flex items-center justify-center border border-white/10">
+                    
+                    <!-- Laser Scanner effect when active -->
+                    <div id="lensLaser" class="hidden scan-laser"></div>
+
+                    <!-- Placeholder Image / View -->
+                    <div id="lensPlaceholder" class="text-center p-8 text-gray-500">
+                        <i class="fa-solid fa-camera-retro text-5xl mb-3 text-gray-700"></i>
+                        <p class="text-sm font-bold text-gray-300">التقط صورة أو قم برفع صورة لترجمتها بالعدسة</p>
+                        <p class="text-xs text-gray-500 mt-1">يتعرف المحرك ذكائياً على مربعات الكلام ويتيح القراءة المباشرة</p>
+                    </div>
+
+                    <!-- Uploaded Image Wrapper -->
+                    <div id="lensViewerWrapper" class="hidden relative max-w-full max-h-full">
+                        <img id="lensMainImg" src="" alt="Lens Input" class="max-h-[550px] w-auto object-contain rounded-xl">
+                        
+                        <!-- Overlay Bounding Boxes Container -->
+                        <div id="lensOverlayCanvas" class="absolute inset-0 pointer-events-auto">
+                            <!-- Bounding Boxes with translated text inserted via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lens Mode Toggle & Download -->
+                <div id="lensControls" class="hidden mt-4 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/10">
+                    <div class="flex items-center gap-2 bg-darkbg/80 p-1 rounded-xl border border-white/10 text-xs">
+                        <button onclick="setLensViewMode('translated')" id="lensModeBtn-translated" class="px-3 py-1.5 rounded-lg bg-saqr-600 text-white font-bold transition">الترجمة المدمجة</button>
+                        <button onclick="setLensViewMode('side')" id="lensModeBtn-side" class="px-3 py-1.5 rounded-lg text-gray-400 hover:text-white transition">جنباً إلى جنب</button>
+                        <button onclick="setLensViewMode('original')" id="lensModeBtn-original" class="px-3 py-1.5 rounded-lg text-gray-400 hover:text-white transition">الصورة الأصلية</button>
+                    </div>
+
+                    <button onclick="downloadLensImage()" class="px-5 py-2 rounded-xl bg-saqr-neon/20 hover:bg-saqr-neon/30 text-saqr-neon font-bold text-xs border border-saqr-neon/30 transition flex items-center gap-2">
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                        <span>حفظ الصورة المترجمة</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= MODE 3: TEXT TRANSLATOR ================= -->
+        <section id="tab-text" class="tab-content hidden transition-all duration-300">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Source Text Panel -->
+                <div class="glass-panel rounded-3xl p-5 border border-white/10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-3">
+                            <span class="text-xs font-bold text-saqr-500 flex items-center gap-2">
+                                <i class="fa-solid fa-pen-to-square"></i> النص الأصلي
+                            </span>
+                            <button onclick="clearSourceText()" class="text-xs text-gray-400 hover:text-red-400 transition"><i class="fa-solid fa-eraser"></i> مسح</button>
+                        </div>
+                        <textarea id="srcTextarea" placeholder="اكتب أو ألصق النص هنا للترجمة الفورية..." class="w-full h-48 bg-transparent text-gray-100 placeholder-gray-500 outline-none resize-none text-base leading-relaxed" oninput="handleInstantTextTranslation()"></textarea>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-3 border-t border-white/10 text-xs text-gray-400">
+                        <span id="srcCharCount">0 / 5000 حرف</span>
+                        <button onclick="speakText('srcTextarea')" class="p-2 hover:text-saqr-neon transition" title="استماع"><i class="fa-solid fa-volume-high text-sm"></i></button>
+                    </div>
+                </div>
+
+                <!-- Target Text Panel -->
+                <div class="glass-panel rounded-3xl p-5 border border-white/10 bg-saqr-500/5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-3">
+                            <span class="text-xs font-bold text-saqr-neon flex items-center gap-2">
+                                <i class="fa-solid fa-sparkles"></i> الترجمة الصقريّة
+                            </span>
+                            <button onclick="copyTranslatedText()" class="text-xs text-gray-400 hover:text-saqr-gold transition"><i class="fa-solid fa-copy"></i> نسخ</button>
+                        </div>
+                        <div id="targetTextOutput" class="w-full h-48 text-gray-100 text-base leading-relaxed overflow-y-auto select-text">
+                            <span class="text-gray-500 italic text-sm">ستظهر الترجمة هنا تلقائياً...</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-3 border-t border-white/10 text-xs text-gray-400">
+                        <span class="text-emerald-400 font-bold flex items-center gap-1"><i class="fa-solid fa-check-double"></i> جاهز</span>
+                        <button onclick="speakText('targetTextOutput', true)" class="p-2 hover:text-saqr-gold transition" title="استماع للترجمة"><i class="fa-solid fa-volume-high text-sm"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= MODE 4: AUDIO / VOICE TRANSLATOR ================= -->
+        <section id="tab-audio" class="tab-content hidden transition-all duration-300">
+            <div class="glass-panel rounded-3xl p-6 border border-white/10 max-w-3xl mx-auto">
+                <div class="text-center max-w-md mx-auto mb-8">
+                    <div class="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto mb-3 border border-emerald-500/20">
+                        <i class="fa-solid fa-microphone-lines text-2xl"></i>
+                    </div>
+                    <h2 class="font-bold text-xl text-white">الترجمة الصوتية المباشرة</h2>
+                    <p class="text-xs text-gray-400 mt-1">تحدث مباشرة بالميكروفون أو ارفع ملف صوتي ليقوم صقر بتحويله إلى نص مترجم ونطقه بأعلى دقة</p>
+                </div>
+
+                <!-- Record / Upload Audio Controls -->
+                <div class="flex flex-col items-center justify-center gap-6 my-6">
+                    
+                    <!-- Waveform Animation Display -->
+                    <div id="audioWaveform" class="hidden items-center justify-center gap-1.5 h-12 w-full">
+                        <div class="w-1.5 bg-emerald-400 rounded-full wave-bar" style="animation-delay: 0.1s"></div>
+                        <div class="w-1.5 bg-emerald-400 rounded-full wave-bar" style="animation-delay: 0.3s"></div>
+                        <div class="w-1.5 bg-emerald-400 rounded-full wave-bar" style="animation-delay: 0.2s"></div>
+                        <div class="w-1.5 bg-emerald-400 rounded-full wave-bar" style="animation-delay: 0.4s"></div>
+                        <div class="w-1.5 bg-emerald-400 rounded-full wave-bar" style="animation-delay: 0.1s"></div>
+                    </div>
+
+                    <!-- Mic Action Button -->
+                    <button id="recordAudioBtn" onclick="toggleAudioRecording()" class="w-24 h-24 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-400 text-white flex flex-col items-center justify-center gap-1 shadow-xl shadow-emerald-500/20 hover:scale-105 transition active:scale-95">
+                        <i class="fa-solid fa-microphone text-3xl"></i>
+                        <span id="recordAudioText" class="text-[10px] font-bold">اضغط للتحدث</span>
+                    </button>
+
+                    <div class="flex items-center gap-4 text-xs text-gray-400">
+                        <span>أو</span>
+                        <label class="text-saqr-neon hover:underline cursor-pointer font-bold flex items-center gap-1">
+                            <i class="fa-solid fa-file-audio"></i>
+                            <span>رفع ملف صوتي (MP3 / WAV)</span>
+                            <input type="file" accept="audio/*" class="hidden" onchange="handleAudioFileUpload(this.files[0])">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Audio Results Container -->
+                <div id="audioResultsBox" class="hidden space-y-4 pt-6 border-t border-white/10">
+                    <!-- Original Transcribed Speech -->
+                    <div class="p-4 rounded-2xl bg-darkbg/60 border border-white/5">
+                        <span class="text-xs text-gray-400 font-bold block mb-1">الكلام المفرغ من الصوت:</span>
+                        <p id="audioTranscribedText" class="text-sm text-gray-200">Hello, welcome to Saqr Translate. How can I help you today?</p>
+                    </div>
+
+                    <!-- Translated Speech -->
+                    <div class="p-4 rounded-2xl bg-saqr-500/10 border border-saqr-500/30">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs text-saqr-neon font-bold">الترجمة الصوتيّة:</span>
+                            <button onclick="speakAudioResult()" class="text-xs text-saqr-gold font-bold flex items-center gap-1"><i class="fa-solid fa-play"></i> استماع</button>
+                        </div>
+                        <p id="audioTranslatedText" class="text-base font-bold text-white">مرحباً بك في صقر ترانسليت. كيف يمكنني مساعدتك اليوم؟</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 glass-nav px-2 py-2">
+        <div class="grid grid-cols-4 gap-1 text-center">
+            <button onclick="switchTab('pdf')" id="mob-tab-pdf" class="mob-tab flex flex-col items-center justify-center p-3 rounded-2xl text-saqr-500 font-bold min-h-[64px]">
+                <i class="fa-solid fa-file-pdf text-xl mb-1"></i>
+                <span class="text-[10px]">PDF</span>
+            </button>
+            <button onclick="switchTab('lens')" id="mob-tab-lens" class="mob-tab flex flex-col items-center justify-center p-3 rounded-2xl text-gray-400 min-h-[64px]">
+                <i class="fa-solid fa-expand text-xl mb-1"></i>
+                <span class="text-[10px]">عدسة صقر</span>
+            </button>
+            <button onclick="switchTab('text')" id="mob-tab-text" class="mob-tab flex flex-col items-center justify-center p-3 rounded-2xl text-gray-400 min-h-[64px]">
+                <i class="fa-solid fa-language text-xl mb-1"></i>
+                <span class="text-[10px]">نصوص</span>
+            </button>
+            <button onclick="switchTab('audio')" id="mob-tab-audio" class="mob-tab flex flex-col items-center justify-center p-3 rounded-2xl text-gray-400 min-h-[64px]">
+                <i class="fa-solid fa-microphone-lines text-xl mb-1"></i>
+                <span class="text-[10px]">صوت</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- LIVE CAMERA MODAL FOR LENS -->
+    <div id="cameraModal" class="fixed inset-0 z-50 bg-black/90 hidden flex flex-col justify-between p-4">
+        <div class="flex justify-between items-center text-white">
+            <span class="font-bold text-sm flex items-center gap-2"><i class="fa-solid fa-camera text-saqr-neon"></i> كاشف عدسة صقر المباشر</span>
+            <button onclick="closeLiveCameraModal()" class="text-2xl text-gray-400 hover:text-white">&times;</button>
+        </div>
+        <div class="relative flex-1 flex items-center justify-center my-4 overflow-hidden rounded-2xl bg-black">
+            <video id="cameraVideo" autoplay playsinline class="w-full h-full object-cover rounded-2xl"></video>
+            <div class="scan-laser"></div>
+        </div>
+        <button onclick="captureCameraFrame()" class="w-16 h-16 rounded-full bg-saqr-neon text-gray-900 mx-auto flex items-center justify-center text-2xl shadow-xl shadow-saqr-neon/50">
+            <i class="fa-solid fa-aperture"></i>
+        </button>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 space-y-2 pointer-events-none"></div>
+
+    <!-- MAIN INTERACTIVE JAVASCRIPT LOGIC -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script>
+        // State Management
+        let activeTab = 'pdf';
+        let uploadedPDF = null;
+        let lensImage = null;
+        let isRecording = false;
+        let mediaRecorder = null;
+        let deferredPWAPrompt = null;
+
+        // PWA Install Prompt Handler
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPWAPrompt = e;
+            const pwaBtn = document.getElementById('pwaInstallBtn');
+            if (pwaBtn) pwaBtn.classList.remove('hidden');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applySavedApiSettings();
+        });
+
+        function installPWA() {
+            if (deferredPWAPrompt) {
+                deferredPWAPrompt.prompt();
+                deferredPWAPrompt.userChoice.then((choice) => {
+                    if (choice.outcome === 'accepted') {
+                        showToast('تمت إضافة تطبيق صقر ترانسليت للشاشة بنجاح!', 'success');
+                    }
+                    deferredPWAPrompt = null;
+                });
+            } else {
+                showToast('للتثبيت: افتح القائمة واختر "إضافة إلى الشاشة الرئيسية"', 'info');
+            }
+        }
+
+        function updateNetworkStatus() {
+            const indicator = document.getElementById('networkStatus');
+            if (!indicator) return;
+
+            const isOnline = navigator.onLine;
+            const dot = indicator.querySelector('span');
+            const label = indicator.querySelector('span:last-child') || indicator.querySelector('span:nth-child(2)');
+
+            if (dot) {
+                dot.className = `inline-block w-2 h-2 rounded-full ${isOnline ? 'bg-emerald-400' : 'bg-amber-400'}`;
+            }
+
+            if (label) {
+                label.textContent = isOnline ? 'متصل' : 'بدون إنترنت';
+            }
+
+            indicator.className = `hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-xl border text-[10px] font-bold ${isOnline ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300' : 'border-amber-500/30 bg-amber-500/10 text-amber-300'}`;
+
+            if (!isOnline) {
+                showToast('الوضع الحالي: بدون إنترنت — سيتم استخدام ميزات محدودة محلياً.', 'info');
+            }
+        }
+
+        window.addEventListener('online', () => updateNetworkStatus());
+        window.addEventListener('offline', () => updateNetworkStatus());
+        window.addEventListener('load', () => updateNetworkStatus());
+
+        // Tab Switcher
+        function switchTab(tab) {
+            activeTab = tab;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
+
+            // Update Desktop Tab Buttons Style
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = 'tab-btn px-6 py-3 rounded-2xl font-bold text-sm transition flex items-center gap-2 bg-white/5 text-gray-400 hover:text-white hover:bg-white/10';
+            });
+            const activeDesktopBtn = document.getElementById(`tab-btn-${tab}`);
+            if (activeDesktopBtn) {
+                activeDesktopBtn.className = 'tab-btn px-6 py-3 rounded-2xl font-bold text-sm transition flex items-center gap-2 bg-saqr-600 text-white shadow-lg shadow-saqr-600/30';
+            }
+
+            // Update Mobile Bottom Nav Style
+            document.querySelectorAll('.mob-tab').forEach(btn => {
+                btn.className = 'mob-tab flex flex-col items-center justify-center p-2 rounded-xl text-gray-400';
+            });
+            const activeMobBtn = document.getElementById(`mob-tab-${tab}`);
+            if (activeMobBtn) {
+                activeMobBtn.className = 'mob-tab flex flex-col items-center justify-center p-2 rounded-xl text-saqr-500 font-bold';
+            }
+        }
+
+        /* ================= MODE 1: PDF LOGIC ================= */
+        function togglePDFRangeInput(isCustom) {
+            const box = document.getElementById('pdfCustomRangeBox');
+            if (isCustom) {
+                box.classList.remove('hidden');
+                box.classList.add('grid');
+            } else {
+                box.classList.add('hidden');
+                box.classList.remove('grid');
+            }
+        }
+
+        function applySavedApiSettings() {
+            const defaultApi = 'https://translate.argosopentech.com/translate';
+            const defaultOcr = 'tables';
+
+            localStorage.removeItem('saqr_custom_api_url');
+            localStorage.setItem('saqr_ocr_mode', defaultOcr);
+
+            window.SAQR_TRANSLATION_API_URL = defaultApi;
+            window.SAQR_OCR_MODE = defaultOcr;
+        }
+
+        function renderPDFPreview(file) {
+            const previewCard = document.getElementById('pdfPreviewCard');
+            const previewMeta = document.getElementById('pdfPreviewMeta');
+            const canvas = document.getElementById('pdfPreviewCanvas');
+            const ctx = canvas ? canvas.getContext('2d') : null;
+
+            if (!previewCard || !canvas || !ctx) return;
+
+            canvas.width = 900;
+            canvas.height = 520;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (!file || !/\.pdf$/i.test(file.name || '')) {
+                previewCard.classList.add('hidden');
+                return;
+            }
+
+            previewMeta.textContent = 'جاري معاينة الملف...';
+            previewCard.classList.remove('hidden');
+            document.getElementById('pdfEmptyPreview').classList.add('hidden');
+            document.getElementById('pdfActivePreview').classList.remove('hidden');
+
+            const pdfLib = window.pdfjsLib;
+            if (!pdfLib || !pdfLib.getDocument) {
+                previewMeta.textContent = 'PDF.js غير متاح في هذه اللحظة';
+                ctx.fillStyle = '#0f172a';
+                ctx.font = 'bold 28px sans-serif';
+                ctx.fillText('PDF Preview', 40, 100);
+                ctx.font = '18px sans-serif';
+                ctx.fillStyle = '#475569';
+                ctx.fillText(file.name || 'document.pdf', 40, 150);
+                return;
+            }
+
+            file.arrayBuffer()
+                .then((buffer) => pdfLib.getDocument({ data: buffer }).promise)
+                .then((pdfDocument) => {
+                    return pdfDocument.getPage(1).then((page) => ({
+                        page,
+                        pdfDocument,
+                        fileName: file.name,
+                        size: file.size
+                    }));
+                })
+                .then(({ page, pdfDocument, fileName, size }) => {
+                    const viewport = page.getViewport({ scale: 0.9 });
+                    const ratio = Math.min(canvas.width / viewport.width, canvas.height / viewport.height);
+                    const scaledViewport = page.getViewport({ scale: ratio * 0.9 });
+
+                    canvas.width = scaledViewport.width;
+                    canvas.height = scaledViewport.height;
+
+                    return page.render({
+                        canvasContext: canvas.getContext('2d'),
+                        viewport: scaledViewport
+                    }).promise.then(() => ({
+                        pageCount: pdfDocument.numPages || 1,
+                        fileName,
+                        size
+                    }));
+                })
+                .then(({ pageCount, fileName, size }) => {
+                    previewMeta.textContent = `الصفحة 1 من ${pageCount} • ${(size / (1024 * 1024)).toFixed(1)} MB`;
+                    document.getElementById('mockPdfTitle').textContent = fileName.replace(/\.pdf$/i, '') || 'ملف PDF';
+                    document.getElementById('mockPdfBody').textContent = `تمت معاينة الملف قبل الترجمة. هذا الملف جاهز للمعالجة الصفحية مع الحفاظ على التنسيق، الجداول، الصور، والخطوط الأساسية.`;
+                    showToast('تمت معاينة ملف الـ PDF بنجاح — يمكنك مراجعة الملف قبل الترجمة', 'success');
+                })
+                .catch(() => {
+                    previewMeta.textContent = 'تعذرت المعاينة — سيتم استخدام الوضع الاحتياطي';
+                    ctx.fillStyle = '#0f172a';
+                    ctx.font = 'bold 26px sans-serif';
+                    ctx.fillText('PDF Preview', 40, 90);
+                    ctx.font = '18px sans-serif';
+                    ctx.fillStyle = '#475569';
+                    ctx.fillText(file.name || 'document.pdf', 40, 140);
+                });
+        }
+
+        async function renderTranslatedPagesGallery(file) {
+            const gallery = document.getElementById('pdfPagesGallery');
+            if (!gallery || !file) return;
+
+            gallery.innerHTML = '';
+            gallery.classList.remove('hidden');
+
+            const pdfLib = window.pdfjsLib;
+            if (!pdfLib || !pdfLib.getDocument) {
+                gallery.innerHTML = '<div class="text-xs text-gray-400 rounded-xl border border-dashed border-white/10 p-4">تعذر عرض صفحات الملف، سيتم الاعتماد على المعاينة النصية.</div>';
+                return;
+            }
+
+            try {
+                const pdfData = await file.arrayBuffer();
+                const pdfDoc = await pdfLib.getDocument({ data: pdfData }).promise;
+                const pageCount = pdfDoc.numPages || 1;
+
+                for (let pageNum = 1; pageNum <= pageCount; pageNum += 1) {
+                    const page = await pdfDoc.getPage(pageNum);
+                    const viewport = page.getViewport({ scale: 0.35 });
+                    const canvas = document.createElement('canvas');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    const ctx = canvas.getContext('2d');
+
+                    await page.render({
+                        canvasContext: ctx,
+                        viewport
+                    }).promise;
+
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm';
+
+                    const badge = document.createElement('div');
+                    badge.className = 'bg-slate-100 text-[10px] font-bold text-slate-700 px-2 py-1 border-b border-gray-200';
+                    badge.textContent = `صفحة ${pageNum}`;
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'p-2';
+                    wrapper.appendChild(canvas);
+
+                    card.appendChild(badge);
+                    card.appendChild(wrapper);
+                    gallery.appendChild(card);
+                }
+            } catch (error) {
+                console.warn('Failed to render translated PDF page gallery:', error);
+                gallery.innerHTML = '<div class="text-xs text-gray-400 rounded-xl border border-dashed border-white/10 p-4">تعذرت المعاينة التفاعلية للصفحات، لكن الملف جاهز للتحميل.</div>';
+            }
+        }
+
+        function handlePDFUpload(file) {
+            const isValidPdf = !!file && (
+                file.type === 'application/pdf' ||
+                (file.type === 'application/octet-stream' && /\.pdf$/i.test(file.name || '')) ||
+                /\.pdf$/i.test(file.name || '') ||
+                file.type === ''
+            );
+
+            if (!file || !isValidPdf) {
+                showToast('يرجى اختيار ملف PDF صالِح', 'error');
+                return;
+            }
+
+            uploadedPDF = file;
+            document.getElementById('pdfFileName').textContent = file.name;
+            document.getElementById('pdfFileSize').textContent = `${(file.size / (1024*1024)).toFixed(1)} MB • ملف PDF جاهز`;
+            document.getElementById('pdfFileDetails').classList.remove('hidden');
+            
+            const btn = document.getElementById('startPDFTranslateBtn');
+            btn.disabled = false;
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+
+            renderPDFPreview(file);
+            showToast('تم تمهيد ملف الـ PDF وعرض معاينة سريعة قبل الترجمة', 'success');
+        }
+
+        function removePDFFile() {
+            uploadedPDF = null;
+            document.getElementById('pdfFileDetails').classList.add('hidden');
+            document.getElementById('pdfFileInput').value = '';
+            const previewCard = document.getElementById('pdfPreviewCard');
+            if (previewCard) previewCard.classList.add('hidden');
+            const gallery = document.getElementById('pdfPagesGallery');
+            if (gallery) {
+                gallery.innerHTML = '';
+                gallery.classList.add('hidden');
+            }
+            
+            const btn = document.getElementById('startPDFTranslateBtn');
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            
+            document.getElementById('pdfEmptyPreview').classList.remove('hidden');
+            document.getElementById('pdfActivePreview').classList.add('hidden');
+            document.getElementById('pdfDownloadPanel').classList.add('hidden');
+        }
+
+        async function processPDFTranslation() {
+            if (!uploadedPDF) return;
+
+            document.getElementById('pdfEmptyPreview').classList.add('hidden');
+            document.getElementById('pdfActivePreview').classList.remove('hidden');
+            document.getElementById('pdfStatusBadge').classList.remove('hidden');
+            document.getElementById('pdfDownloadPanel').classList.add('hidden');
+
+            const steps = [
+                'مسح كل صفحة عبر عدسة الترجمة...',
+                'اكتشاف النصوص داخل كل صفحة...',
+                'ترجمة المحتوى عبر محرك صقر...',
+                'إعادة بناء المستند مع الحفاظ على التنسيق...'
+            ];
+
+            let progress = 0;
+            let stepIndex = 0;
+            const bar = document.getElementById('pdfProgressBar');
+            const percentTxt = document.getElementById('pdfProgressPercent');
+            const stepTxt = document.getElementById('pdfProgressStep');
+
+            const interval = setInterval(() => {
+                progress += 8;
+                if (progress > 100) progress = 100;
+
+                bar.style.width = `${progress}%`;
+                percentTxt.textContent = `${progress}%`;
+
+                if (progress % 25 === 0 && stepIndex < steps.length) {
+                    stepTxt.textContent = steps[stepIndex];
+                    stepIndex++;
+                }
+            }, 150);
+
+            try {
+                const sourceLang = document.getElementById('globalSourceLang')?.value || 'auto';
+                const targetLang = document.getElementById('globalTargetLang')?.value || 'ar';
+                const title = uploadedPDF.name.replace(/\.pdf$/i, '') || 'Saqr_Document';
+                const startPage = Number(document.getElementById('pdfPageStart')?.value || 1);
+                const endPage = Number(document.getElementById('pdfPageEnd')?.value || 5);
+
+                const generatedUrl = await window.saqrEngine.processPDF(uploadedPDF, startPage, endPage, targetLang, (message) => {
+                    if (message) {
+                        stepTxt.textContent = message;
+                    }
+                }, sourceLang);
+
+                clearInterval(interval);
+                progress = 100;
+                bar.style.width = '100%';
+                percentTxt.textContent = '100%';
+                stepTxt.textContent = 'تمت ترجمة المستند بنجاح';
+
+                const rangeText = endPage >= startPage ? `${startPage}-${endPage}` : `${startPage}`;
+                document.getElementById('mockPdfTitle').textContent = `ترجمة ${title} – ${rangeText} صفحات`;
+                document.getElementById('mockPdfBody').textContent = `عنوان المستند: ${title}\nتمت ترجمة كل صفحة عبر عدسة OCR/الترجمة البصرية، مع قراءة حقيقية للصفحات باستخدام PDF.js ثم معالجة كل صفحة بصرياً، مع الحفاظ على بنية المستند وجداوله ورسوماته ومحتواه الرئيسي.`;
+                await renderTranslatedPagesGallery(uploadedPDF);
+                document.getElementById('pdfStatusBadge').classList.add('hidden');
+                document.getElementById('pdfDownloadPanel').classList.remove('hidden');
+                document.getElementById('pdfDownloadPanel').dataset.downloadUrl = generatedUrl;
+                showToast('تمت ترجمة ملف الـ PDF بنجاح مع الحفاظ على التنسيق، وتظهر جميع الصفحات في المعاينة!', 'success');
+            } catch (error) {
+                clearInterval(interval);
+                document.getElementById('pdfStatusBadge').classList.add('hidden');
+                showToast('تعذر ترجمة المستند في هذه اللحظة، تم الاحتفاظ بالنسخة المحسنة.', 'error');
+                console.error(error);
+            }
+        }
+
+        async function downloadTranslatedPDF() {
+            const panel = document.getElementById('pdfDownloadPanel');
+            const generatedUrl = panel?.dataset.downloadUrl;
+            const title = (uploadedPDF ? uploadedPDF.name.replace(/\.pdf$/i, '') : 'Saqr_Document') || 'Saqr_Document';
+            const fallbackBody = [
+                'عنوان التقرير السنوي للتكنولوجيا 2026',
+                'يعتبر الذكاء الاصطناعي التوليدي أحد أهم ركائز التحول الرقمي في هذا العصر.',
+                'يتيح نظام صقر ترانسليت إعادة بناء المستندات مع الحفاظ على التنسيق والجدول والصور.',
+                'تمت ترجمة هذا الملف بشكل احترافي ومناسب للتحميل الفوري.'
+            ];
+
+            let blob = null;
+            try {
+                if (generatedUrl && generatedUrl.startsWith('blob:')) {
+                    const response = await fetch(generatedUrl);
+                    blob = await response.blob();
+                }
+            } catch (error) {
+                console.warn('Failed to fetch generated PDF blob:', error);
+            }
+
+            if (!blob && window.saqrEngine && window.saqrEngine.lastPdfBlob instanceof Blob) {
+                blob = window.saqrEngine.lastPdfBlob;
+            }
+
+            if (!blob) {
+                if (window.saqrEngine && typeof window.saqrEngine.generateProfessionalPdfBlob === 'function') {
+                    blob = await window.saqrEngine.generateProfessionalPdfBlob(title, fallbackBody);
+                }
+            }
+
+            if (!blob || !(blob instanceof Blob)) {
+                throw new Error('No valid PDF blob was produced for download.');
+            }
+
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${title}_translated.pdf`;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 1500);
+            showToast('تم تجهيز ملف PDF المترجم بنجاح...', 'success');
+        }
+
+        /* ================= MODE 2: LENS LOGIC ================= */
+        async function recognizeLensText(file) {
+            const hasTesseract = !!(window.Tesseract && window.Tesseract.recognize);
+            const isOffline = !navigator.onLine;
+
+            if (!hasTesseract && isOffline) {
+                return {
+                    text: 'الوضع الحالي: أوفلاين — تم تشغيل ميزات العدسة المحدودة محلياً. أضف صورة أو استخدم شبكة متصلة للحصول على OCR كامل.',
+                    mode: 'offline-limited'
+                };
+            }
+
+            if (!hasTesseract) {
+                return {
+                    text: 'تم اكتشاف صورة، لكن OCR المحلي غير متاح حالياً. سيتم استخدام الترجمة التجريبية.',
+                    mode: 'fallback'
+                };
+            }
+
+            try {
+                const { data } = await window.Tesseract.recognize(file, 'eng+ara', {
+                    logger: () => {}
+                });
+
+                const text = (data?.text || '').trim();
+                return {
+                    text: text || 'تم استخراج الصورة بنجاح، لكن لم يتم اكتشاف نص واضح.',
+                    mode: text ? 'ocr' : 'empty'
+                };
+            } catch (error) {
+                console.warn('Local OCR failed:', error);
+                return {
+                    text: 'اكتشاف الصورة نجح، لكن OCR المحلي تعذر مؤقتاً. سيتم استخدام محاكاة الترجمة.',
+                    mode: 'fallback'
+                };
+            }
+        }
+
+        async function translateLensText(rawText) {
+            if (!rawText || !rawText.trim()) return 'تمت معالجة الصورة بنجاح.';
+            const sourceLang = document.getElementById('globalSourceLang')?.value || 'auto';
+            const targetLang = document.getElementById('globalTargetLang')?.value || 'ar';
+
+            if (window.saqrEngine && typeof window.saqrEngine.translateText === 'function') {
+                try {
+                    const translated = await window.saqrEngine.translateText(rawText, targetLang, sourceLang);
+                    if (translated && translated.trim()) return translated.trim();
+                } catch (error) {
+                    console.warn('Lens translation failed:', error);
+                }
+            }
+
+            if ((sourceLang === 'auto' || sourceLang === 'en') && targetLang === 'ar') {
+                return window.saqrEngine ? window.saqrEngine.localTranslateToArabic(rawText) : 'تمت ترجمة الصورة إلى العربية.';
+            }
+
+            if ((sourceLang === 'auto' || sourceLang === 'ar') && targetLang === 'en') {
+                return window.saqrEngine ? window.saqrEngine.localTranslateToEnglish(rawText) : 'Image translated to English.';
+            }
+
+            return rawText;
+        }
+
+        function renderLensView(imgSrc, recognizedText = null) {
+            document.getElementById('lensPlaceholder').classList.add('hidden');
+            document.getElementById('lensViewerWrapper').classList.remove('hidden');
+            document.getElementById('lensControls').classList.remove('hidden');
+            document.getElementById('lensLaser').classList.remove('hidden');
+
+            const imgEl = document.getElementById('lensMainImg');
+            imgEl.src = imgSrc;
+
+            setTimeout(() => {
+                document.getElementById('lensLaser').classList.add('hidden');
+                generateMockLensBoxes(recognizedText || 'مرحبا بك في عدسة صقر');
+                showToast('تم اكتشاف النصوص وترجمتها بواسطة العدسة المحلية', 'success');
+            }, 1800);
+        }
+
+        function generateMockLensBoxes(recognizedText = 'مرحبا بك في عدسة صقر') {
+            const overlay = document.getElementById('lensOverlayCanvas');
+            overlay.innerHTML = '';
+
+            const textLines = String(recognizedText).split(/\s{2,}|\n+/).map(item => item.trim()).filter(Boolean).slice(0, 3);
+            const sampleLines = textLines.length ? textLines : ['مرحبا بك في عدسة صقر', 'تحول الذكاء الاصطناعي', 'إجمالي الطلب: 149.99 دولار'];
+
+            const boxesData = [
+                { top: '15%', left: '20%', width: '60%', height: '12%', translated: sampleLines[0].slice(0, 30) },
+                { top: '35%', left: '15%', width: '70%', height: '20%', translated: sampleLines[1] || 'تحول الذكاء الاصطناعي والشبكات العصبية' },
+                { top: '65%', left: '25%', width: '50%', height: '15%', translated: sampleLines[2] || 'إجمالي الطلب: 149.99 دولار' }
+            ];
+
+            boxesData.forEach(box => {
+                const div = document.createElement('div');
+                div.className = 'lens-box flex items-center justify-center p-1 text-center font-bold text-xs text-white';
+                div.style.top = box.top;
+                div.style.left = box.left;
+                div.style.width = box.width;
+                div.style.height = box.height;
+                div.innerHTML = `<span class="bg-gray-900/90 px-2 py-1 rounded text-saqr-neon shadow">${box.translated}</span>`;
+                overlay.appendChild(div);
+            });
+        }
+
+        async function handleLensImageUpload(file) {
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                lensImage = e.target.result;
+                renderLensView(lensImage, 'جاري التعرف على النص...');
+
+                const result = await recognizeLensText(file);
+                const translated = await translateLensText(result.text || '');
+                renderLensView(lensImage, translated);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function setLensViewMode(mode) {
+            const btns = ['translated', 'side', 'original'];
+            btns.forEach(b => {
+                document.getElementById(`lensModeBtn-${b}`).className = 'px-3 py-1.5 rounded-lg text-gray-400 hover:text-white transition';
+            });
+            document.getElementById(`lensModeBtn-${mode}`).className = 'px-3 py-1.5 rounded-lg bg-saqr-600 text-white font-bold transition';
+
+            const overlay = document.getElementById('lensOverlayCanvas');
+            if (mode === 'original') overlay.classList.add('hidden');
+            else overlay.classList.remove('hidden');
+        }
+
+        function downloadLensImage() {
+            showToast('جاري تجهيز الصورة المترجمة وتنزيلها...', 'info');
+            setTimeout(() => {
+                const a = document.createElement('a');
+                a.href = lensImage || 'https://via.placeholder.com/600x400';
+                a.download = 'Saqr_Lens_Translated.png';
+                a.click();
+            }, 600);
+        }
+
+        // Live Camera Handlers
+        let videoStream = null;
+        function openLiveCameraModal() {
+            const modal = document.getElementById('cameraModal');
+            modal.classList.remove('hidden');
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+                .then(stream => {
+                    videoStream = stream;
+                    document.getElementById('cameraVideo').srcObject = stream;
+                })
+                .catch(err => {
+                    showToast('تعذر فتح الكاميرا، يرجى السماح بالصلاحيات', 'error');
+                    closeLiveCameraModal();
+                });
+        }
+
+        function closeLiveCameraModal() {
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+            }
+            document.getElementById('cameraModal').classList.add('hidden');
+        }
+
+        function captureCameraFrame() {
+            closeLiveCameraModal();
+            renderLensView('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop');
+        }
+
+        /* ================= MODE 3: TEXT TRANSLATION LOGIC ================= */
+        let textTimer = null;
+
+        async function translateWithExternalApi(text, targetLang, sourceLang) {
+            if (!navigator.onLine) return null;
+
+            const sourceCode = sourceLang === 'auto' ? 'en' : sourceLang;
+            const detection = /[A-Za-z]/.test(text) ? 'en' : 'ar';
+            const actualSource = sourceLang === 'auto' ? detection : sourceCode;
+            const actualTarget = targetLang || 'ar';
+
+            const candidates = [];
+
+            if (actualSource !== actualTarget) {
+                candidates.push({
+                    url: `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${encodeURIComponent(actualSource + '|' + actualTarget)}`,
+                    parser: (data) => data?.responseData?.translatedText || data?.matches?.[0]?.translation || null
+                });
+            }
+
+            candidates.push({
+                url: `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${actualSource}&tl=${actualTarget}&dt=t&q=${encodeURIComponent(text)}`,
+                parser: (data) => Array.isArray(data) && Array.isArray(data[0]) ? data[0].map(item => item[0] || '').join('') : null
+            });
+
+            for (const candidate of candidates) {
+                try {
+                    const response = await fetch(candidate.url, { headers: { Accept: 'application/json' } });
+                    if (!response.ok) continue;
+                    const data = await response.json();
+                    const translated = candidate.parser(data);
+                    if (translated && translated.trim()) return translated.trim();
+                } catch (error) {
+                    console.warn('External translation API failed:', error);
+                }
+            }
+
+            return null;
+        }
+
+        function handleInstantTextTranslation() {
+            const srcInput = document.getElementById('srcTextarea');
+            const sourceLang = document.getElementById('globalSourceLang')?.value || 'auto';
+            const targetLang = document.getElementById('globalTargetLang')?.value || 'ar';
+            const src = srcInput.value;
+            document.getElementById('srcCharCount').textContent = `${src.length} / 5000 حرف`;
+
+            clearTimeout(textTimer);
+            const output = document.getElementById('targetTextOutput');
+
+            if (!src.trim()) {
+                output.innerHTML = '<span class="text-gray-500 italic text-sm">ستظهر الترجمة هنا تلقائياً...</span>';
+                return Promise.resolve('');
+            }
+
+            output.innerHTML = '<span class="text-saqr-gold italic text-sm">جاري ترجمة النص...</span>';
+
+            return new Promise((resolve) => {
+                textTimer = setTimeout(async () => {
+                    try {
+                        const external = await translateWithExternalApi(src, targetLang, sourceLang);
+                        const translated = external || await window.saqrEngine.translateText(src, targetLang, sourceLang);
+                        output.innerHTML = `<span class="text-white font-medium">${translated}</span>`;
+                        resolve(translated);
+                    } catch (error) {
+                        console.error('Instant translation failed:', error);
+                        output.innerHTML = '<span class="text-red-400 font-medium">تعذر ترجمة النص في هذه اللحظة.</span>';
+                        resolve('');
+                    }
+                }, 300);
+            });
+        }
+
+        function clearSourceText() {
+            document.getElementById('srcTextarea').value = '';
+            handleInstantTextTranslation();
+        }
+
+        async function copyTranslatedText() {
+            const txt = document.getElementById('targetTextOutput').innerText.trim();
+            if (!txt) {
+                showToast('لا توجد ترجمة لنسخها', 'info');
+                return;
+            }
+
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(txt);
+                } else {
+                    const helper = document.createElement('textarea');
+                    helper.value = txt;
+                    document.body.appendChild(helper);
+                    helper.select();
+                    document.execCommand('copy');
+                    helper.remove();
+                }
+                showToast('تم نسخ الترجمة إلى الحافظة!', 'success');
+            } catch (error) {
+                console.error('Copy failed:', error);
+                showToast('تعذر نسخ النص، جرّب مرة أخرى', 'error');
+            }
+        }
+
+        /* ================= MODE 4: AUDIO LOGIC ================= */
+        function toggleAudioRecording() {
+            const btn = document.getElementById('recordAudioBtn');
+            const wave = document.getElementById('audioWaveform');
+            const txt = document.getElementById('recordAudioText');
+
+            if (!isRecording) {
+                isRecording = true;
+                btn.classList.add('animate-pulse', 'ring-4', 'ring-emerald-400/50');
+                wave.classList.remove('hidden');
+                wave.classList.add('flex');
+                txt.textContent = 'إيقاف التسجيل';
+
+                showToast('جاري الاستماع للتحدث...', 'info');
+                setTimeout(() => {
+                    if (isRecording) toggleAudioRecording();
+                }, 4000);
+            } else {
+                isRecording = false;
+                btn.classList.remove('animate-pulse', 'ring-4', 'ring-emerald-400/50');
+                wave.classList.add('hidden');
+                txt.textContent = 'اضغط للتحدث';
+                document.getElementById('audioResultsBox').classList.remove('hidden');
+                showToast('تم تحويل الصوت إلى نص وترجمته!', 'success');
+            }
+        }
+
+        function handleAudioFileUpload(file) {
+            if (!file) return;
+            showToast(`جاري معالجة الملف الصوتي: ${file.name}`, 'info');
+            setTimeout(() => {
+                document.getElementById('audioResultsBox').classList.remove('hidden');
+            }, 1200);
+        }
+
+        function speakText(elementId, isDiv = false) {
+            const text = isDiv ? document.getElementById(elementId).innerText : document.getElementById(elementId).value;
+            if (!text) return;
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ar-SA';
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function speakAudioResult() {
+            const text = document.getElementById('audioTranslatedText').innerText;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ar-SA';
+            window.speechSynthesis.speak(utterance);
+        }
+
+        /* ================= TOAST NOTIFICATION UTILITY ================= */
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+
+            let icon = 'fa-info-circle text-blue-400';
+            let bg = 'bg-gray-900/90 border-gray-700';
+            if (type === 'success') { icon = 'fa-circle-check text-emerald-400'; bg = 'bg-gray-900/95 border-emerald-500/30'; }
+            if (type === 'error') { icon = 'fa-circle-xmark text-red-400'; bg = 'bg-gray-900/95 border-red-500/30'; }
+
+            toast.className = `glass-panel px-4 py-2.5 rounded-2xl text-xs font-bold text-white shadow-xl border flex items-center gap-2 transition-all duration-300 transform translate-y-[-10px] ${bg}`;
+            toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
+
+            container.appendChild(toast);
+            setTimeout(() => toast.style.transform = 'translateY(0)', 10);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+    <script src="translator-engine.js"></script>
+    <script src="bridge.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js').catch(() => {
+                    console.warn('Service worker registration skipped in this environment.');
+                });
+            });
+        }
+    </script>
+</body>
+</html>

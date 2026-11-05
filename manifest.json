@@ -1,0 +1,33 @@
+{
+  "name": "Saqr Translate",
+  "short_name": "Saqr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "background_color": "#0b0f19",
+  "theme_color": "#6366f1",
+  "description": "Saqr Translate - intelligent text, image and PDF translation app",
+  "orientation": "portrait-primary",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/fluency/192/000000/translation.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://img.icons8.com/fluency/512/000000/translation.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
+      "sizes": "1200x800",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    }
+  ]
+}
